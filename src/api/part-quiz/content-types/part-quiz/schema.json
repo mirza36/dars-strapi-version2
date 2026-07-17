@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "part_quizzes",
+  "info": {
+    "singularName": "part-quiz",
+    "pluralName": "part-quizzes",
+    "displayName": "Part Quiz"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "Questions": {
+      "type": "json",
+      "required": true
+    },
+    "part": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::part.part",
+      "inversedBy": "part_quiz"
+    }
+  }
+}

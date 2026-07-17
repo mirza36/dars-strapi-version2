@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "level_quizzes",
+  "info": {
+    "singularName": "level-quiz",
+    "pluralName": "level-quizzes",
+    "displayName": "Level Quiz"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Passing_Score": {
+      "type": "integer",
+      "required": true,
+      "default": 70
+    },
+    "Questions": {
+      "type": "json",
+      "required": true
+    },
+    "level": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::level.level",
+      "inversedBy": "level_quiz"
+    }
+  }
+}

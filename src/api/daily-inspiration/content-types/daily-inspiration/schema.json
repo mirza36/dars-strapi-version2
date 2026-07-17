@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "daily_inspirations",
+  "info": {
+    "singularName": "daily-inspiration",
+    "pluralName": "daily-inspirations",
+    "displayName": "Daily Inspiration"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Type": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Quran",
+      "enum": [
+        "Quran",
+        "Hadith"
+      ]
+    },
+    "Arabic_Text": {
+      "type": "text",
+      "required": true
+    },
+    "Text": {
+      "type": "text",
+      "required": true
+    },
+    "Reference": {
+      "type": "text",
+      "required": true
+    }
+  }
+}
