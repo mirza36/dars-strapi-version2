@@ -36,9 +36,6 @@
     "Author": {
       "type": "string"
     },
-    "Category": {
-      "type": "string"
-    },
     "Cover_Image": {
       "type": "media",
       "multiple": false,
@@ -46,6 +43,19 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "Category": {
+      "type": "enumeration",
+      "required": true,
+      "default": "Others",
+      "enum": [
+        "Others",
+        "Irfan-e-Islami",
+        "Ulema Ki Zindagi"
+      ]
+    },
+    "LevelCount": {
+      "type": "integer"
     }
   }
 }

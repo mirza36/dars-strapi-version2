@@ -489,13 +489,18 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
   attributes: {
     Author: Schema.Attribute.String;
-    Category: Schema.Attribute.String;
+    Category: Schema.Attribute.Enumeration<
+      ['Others', 'Irfan-e-Islami', 'Ulema Ki Zindagi']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Others'>;
     Cover_Image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     Description: Schema.Attribute.Text;
     Is_Featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    LevelCount: Schema.Attribute.Integer;
     levels: Schema.Attribute.Relation<'oneToMany', 'api::level.level'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
