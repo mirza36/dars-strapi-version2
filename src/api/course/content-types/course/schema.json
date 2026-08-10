@@ -54,7 +54,7 @@
         "Ulema Ki Zindagi"
       ]
     },
-    "LevelCount": {
+    "PartsCount": {
       "type": "integer"
     }
   }

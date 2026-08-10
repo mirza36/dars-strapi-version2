@@ -500,7 +500,6 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     Description: Schema.Attribute.Text;
     Is_Featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    LevelCount: Schema.Attribute.Integer;
     levels: Schema.Attribute.Relation<'oneToMany', 'api::level.level'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -508,6 +507,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       'api::course.course'
     > &
       Schema.Attribute.Private;
+    PartsCount: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     Slug: Schema.Attribute.UID<'Title'> & Schema.Attribute.Required;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
