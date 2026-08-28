@@ -22,12 +22,6 @@
     "Questions": {
       "type": "json",
       "required": true
-    },
-    "level": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::level.level",
-      "inversedBy": "level_quiz"
     }
   }
 }

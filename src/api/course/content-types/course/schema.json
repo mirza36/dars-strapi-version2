@@ -4,7 +4,7 @@
   "info": {
     "singularName": "course",
     "pluralName": "courses",
-    "displayName": "Course"
+    "displayName": "Main_Dars"
   },
   "options": {
     "draftAndPublish": true
@@ -23,16 +23,6 @@
     "Description": {
       "type": "text"
     },
-    "levels": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::level.level",
-      "mappedBy": "course"
-    },
-    "Is_Featured": {
-      "type": "boolean",
-      "default": false
-    },
     "Author": {
       "type": "string"
     },
@@ -44,17 +34,16 @@
         "images"
       ]
     },
-    "Category": {
-      "type": "enumeration",
-      "required": true,
-      "default": "Others",
-      "enum": [
-        "Others",
-        "Irfan-e-Islami",
-        "Ulema Ki Zindagi"
-      ]
-    },
     "PartsCount": {
+      "type": "integer"
+    },
+    "parts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::part.part",
+      "mappedBy": "main_dar"
+    },
+    "DarsLevel": {
       "type": "integer"
     }
   }

@@ -477,10 +477,42 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
+  collectionName: 'categories';
+  info: {
+    displayName: 'Category';
+    pluralName: 'categories';
+    singularName: 'category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Category_Name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.DefaultTo<'Others'>;
+    courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category.category'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   collectionName: 'courses';
   info: {
-    displayName: 'Course';
+    displayName: 'Main_Dars';
     pluralName: 'courses';
     singularName: 'course';
   };
@@ -489,24 +521,19 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
   attributes: {
     Author: Schema.Attribute.String;
-    Category: Schema.Attribute.Enumeration<
-      ['Others', 'Irfan-e-Islami', 'Ulema Ki Zindagi']
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Others'>;
     Cover_Image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    DarsLevel: Schema.Attribute.Integer;
     Description: Schema.Attribute.Text;
-    Is_Featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    levels: Schema.Attribute.Relation<'oneToMany', 'api::level.level'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::course.course'
     > &
       Schema.Attribute.Private;
+    parts: Schema.Attribute.Relation<'oneToMany', 'api::part.part'>;
     PartsCount: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     Slug: Schema.Attribute.UID<'Title'> & Schema.Attribute.Required;
@@ -529,7 +556,7 @@ export interface ApiDailyInspirationDailyInspiration
     draftAndPublish: true;
   };
   attributes: {
-    Arabic_Text: Schema.Attribute.Text & Schema.Attribute.Required;
+    Arabic_Text: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -539,6 +566,9 @@ export interface ApiDailyInspirationDailyInspiration
       'api::daily-inspiration.daily-inspiration'
     > &
       Schema.Attribute.Private;
+    Order: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<1>;
     publishedAt: Schema.Attribute.DateTime;
     Reference: Schema.Attribute.Text & Schema.Attribute.Required;
     Text: Schema.Attribute.Text & Schema.Attribute.Required;
@@ -565,7 +595,6 @@ export interface ApiLevelQuizLevelQuiz extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    level: Schema.Attribute.Relation<'oneToOne', 'api::level.level'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -578,38 +607,6 @@ export interface ApiLevelQuizLevelQuiz extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     Questions: Schema.Attribute.JSON & Schema.Attribute.Required;
     Title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiLevelLevel extends Struct.CollectionTypeSchema {
-  collectionName: 'levels';
-  info: {
-    displayName: 'Level';
-    pluralName: 'levels';
-    singularName: 'level';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    course: Schema.Attribute.Relation<'manyToOne', 'api::course.course'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    level_quiz: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::level-quiz.level-quiz'
-    >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::level.level'> &
-      Schema.Attribute.Private;
-    Order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1>;
-    parts: Schema.Attribute.Relation<'oneToMany', 'api::part.part'>;
-    publishedAt: Schema.Attribute.DateTime;
-    Title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -649,7 +646,7 @@ export interface ApiPartQuizPartQuiz extends Struct.CollectionTypeSchema {
 export interface ApiPartPart extends Struct.CollectionTypeSchema {
   collectionName: 'parts';
   info: {
-    displayName: 'Part';
+    displayName: 'Parts_of_Main_Dars';
     pluralName: 'parts';
     singularName: 'part';
   };
@@ -662,11 +659,18 @@ export interface ApiPartPart extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    level: Schema.Attribute.Relation<'manyToOne', 'api::level.level'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::part.part'> &
       Schema.Attribute.Private;
-    Order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1>;
+    main_dar: Schema.Attribute.Relation<'manyToOne', 'api::course.course'>;
+    Order: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     part_quiz: Schema.Attribute.Relation<
       'oneToOne',
       'api::part-quiz.part-quiz'
@@ -677,45 +681,6 @@ export interface ApiPartPart extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user_progresses: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::user-progress.user-progress'
-    >;
-  };
-}
-
-export interface ApiUserProgressUserProgress
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'user_progresses';
-  info: {
-    displayName: 'User Progress';
-    pluralName: 'user-progresses';
-    singularName: 'user-progress';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Audio_Resume_Time: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    Last_Accessed: Schema.Attribute.DateTime;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::user-progress.user-progress'
-    > &
-      Schema.Attribute.Private;
-    part: Schema.Attribute.Relation<'manyToOne', 'api::part.part'>;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    users_permissions_user: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
   };
 }
 
@@ -1209,10 +1174,6 @@ export interface PluginUsersPermissionsUser
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user_progresses: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::user-progress.user-progress'
-    >;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
@@ -1234,13 +1195,12 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::category.category': ApiCategoryCategory;
       'api::course.course': ApiCourseCourse;
       'api::daily-inspiration.daily-inspiration': ApiDailyInspirationDailyInspiration;
       'api::level-quiz.level-quiz': ApiLevelQuizLevelQuiz;
-      'api::level.level': ApiLevelLevel;
       'api::part-quiz.part-quiz': ApiPartQuizPartQuiz;
       'api::part.part': ApiPartPart;
-      'api::user-progress.user-progress': ApiUserProgressUserProgress;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

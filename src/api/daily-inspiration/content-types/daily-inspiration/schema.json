@@ -22,7 +22,7 @@
     },
     "Arabic_Text": {
       "type": "text",
-      "required": true
+      "required": false
     },
     "Text": {
       "type": "text",
@@ -31,6 +31,11 @@
     "Reference": {
       "type": "text",
       "required": true
+    },
+    "Order": {
+      "type": "integer",
+      "required": true,
+      "default": 1
     }
   }
 }
