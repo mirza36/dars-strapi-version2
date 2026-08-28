@@ -20,7 +20,8 @@
     "courses": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::course.course"
+      "target": "api::course.course",
+      "mappedBy": "category"
     }
   }
 }

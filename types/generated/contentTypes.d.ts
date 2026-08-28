@@ -521,6 +521,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
   attributes: {
     Author: Schema.Attribute.String;
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
     Cover_Image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -575,38 +576,6 @@ export interface ApiDailyInspirationDailyInspiration
     Type: Schema.Attribute.Enumeration<['Quran', 'Hadith']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Quran'>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiLevelQuizLevelQuiz extends Struct.CollectionTypeSchema {
-  collectionName: 'level_quizzes';
-  info: {
-    displayName: 'Level Quiz';
-    pluralName: 'level-quizzes';
-    singularName: 'level-quiz';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::level-quiz.level-quiz'
-    > &
-      Schema.Attribute.Private;
-    Passing_Score: Schema.Attribute.Integer &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<70>;
-    publishedAt: Schema.Attribute.DateTime;
-    Questions: Schema.Attribute.JSON & Schema.Attribute.Required;
-    Title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1198,7 +1167,6 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::course.course': ApiCourseCourse;
       'api::daily-inspiration.daily-inspiration': ApiDailyInspirationDailyInspiration;
-      'api::level-quiz.level-quiz': ApiLevelQuizLevelQuiz;
       'api::part-quiz.part-quiz': ApiPartQuizPartQuiz;
       'api::part.part': ApiPartPart;
       'plugin::content-releases.release': PluginContentReleasesRelease;
